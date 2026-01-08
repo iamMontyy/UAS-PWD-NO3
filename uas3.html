@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Hitung Gaji Karyawan - Sesuai Gambar</title>
+    <style>
+       
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+      
+        table {
+            border-collapse: collapse;
+            width: 800px;
+            background-color: white;
+            border: 1px solid black;
+        }
+
+        
+        th {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.2em;
+            letter-spacing: 2px;
+        }
+
+     
+        td {
+            border: 1px solid black;
+            padding: 30px;
+            width: 50%;
+            vertical-align: top;
+        }
+
+       
+        .input-box h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            font-size: 0.9em;
+            display: inline-block;
+            width: 140px;
+        }
+
+        .input-group input {
+            padding: 4px;
+            width: 160px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+
+       
+        .output-box p {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <thead>
+            <tr>
+                <th>INPUTAN</th>
+                <th>OUTPUT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="input-box">
+                    <h2>Hitung Gaji Karyawan</h2>
+                    <div class="input-group">
+                        <label>Gaji Pokok (Rp):</label>
+                        <input type="number" id="gajiPokok" value="5000000">
+                    </div>
+                    <div class="input-group">
+                        <label>Jumlah Jam Lembur:</label>
+                        <input type="number" id="jamLembur" value="20">
+                    </div>
+                    <button onclick="hitungGaji()">Hitung Gaji</button>
+                </td>
+
+                <td class="output-box">
+                    <p>Gaji Pokok: <span id="resPokok">Rp 5.000.000</span></p>
+                    <p>Total Gaji Lembur: <span id="resLembur">Rp 400.000</span></p>
+                    <p>Gaji Kotor: <span id="resKotor">Rp 5.400.000</span></p>
+                    <p>Pajak: <span id="resPajak">Rp 540.000</span></p>
+                    <p>Gaji Bersih: <span id="resBersih">Rp 4.860.000</span></p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function formatRupiah(angka) {
+            return "Rp " + angka.toLocaleString('id-ID');
+        }
+
+        function hitungGaji() {
+           
+            const upahLemburPerJam = 20000; 
+            
+       
+            const gajiPokok = parseFloat(document.getElementById('gajiPokok').value) || 0;
+            const jamLembur = parseFloat(document.getElementById('jamLembur').value) || 0;
+
+           
+            const totalLembur = jamLembur * upahLemburPerJam;
+
+            
+            const gajiKotor = gajiPokok + totalLembur;
+
+           
+            let tarifPajak = 0;
+            if (gajiKotor < 5000000) {
+                tarifPajak = 0.05;
+            } else if (gajiKotor >= 5000000 && gajiKotor <= 10000000) {
+                tarifPajak = 0.10;
+            } else {
+                tarifPajak = 0.15;
+            }
+            const totalPajak = gajiKotor * tarifPajak;
+
+           
+            const gajiBersih = gajiKotor - totalPajak;
+
+           
+            document.getElementById('resPokok').innerText = formatRupiah(gajiPokok);
+            document.getElementById('resLembur').innerText = formatRupiah(totalLembur);
+            document.getElementById('resKotor').innerText = formatRupiah(gajiKotor);
+            document.getElementById('resPajak').innerText = formatRupiah(totalPajak);
+            document.getElementById('resBersih').innerText = formatRupiah(gajiBersih);
+        }
+    </script>
+</body>
+</html>
